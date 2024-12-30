@@ -68,8 +68,9 @@ http.FileServer(http.Dir("hoge-dir")))
 go run ch06/FileServerCSSJavaScript/main.go
 ```
 
+static フォルダ以下に css と JavaScript も追加。
 ```sh
-fileServer := http.FileServer(http.Dir("ch06/FileServer/static"))
+fileServer := http.FileServer(http.Dir("/static"))
 stripPrefix := http.StripPrefix("/static/", fileServer)
 http.Handle("/", stripPrefix)
 ```

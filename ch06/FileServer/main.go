@@ -6,9 +6,7 @@ import (
 )
 
 func main() {
-	fileServer := http.FileServer(http.Dir("ch06/FileServer/static"))
-	stripPrefix := http.StripPrefix("/static/", fileServer)
-	http.Handle("/", stripPrefix)
+	http.Handle("/", http.FileServer(http.Dir("ch06/FileServer/static")))
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal("failed to start:", err)
