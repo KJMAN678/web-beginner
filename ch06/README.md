@@ -1,3 +1,5 @@
+## 全般
+
 ### 初期ファイル作成
 ```sh
 go mod init web-begginer
@@ -8,7 +10,7 @@ go mod init web-begginer
 go fmt ./...
 ```
 
-### ListenAndServe
+## ListenAndServe
 ```sh
 # Linux コマンドでローカルサーバー立ち上げ
 echo 'Hello, Web application!' | nc -l 8080
@@ -49,7 +51,7 @@ if err != nil {
 }
 ```
 
-### FileServer static/xxx.html を読み込んでローカルサーバー立ち上げ
+## FileServer static/xxx.html を読み込んでローカルサーバー立ち上げ
 
 ```sh
 go run ch06/FileServer/main.go
@@ -68,10 +70,42 @@ http.FileServer(http.Dir("hoge-dir")))
 go run ch06/FileServerCSSJavaScript/main.go
 ```
 
-static フォルダ以下に css と JavaScript も追加。
+- static フォルダ以下に css と JavaScript も追加。
+- CSS: h1 の色変更
+- JavaScript: ButtonClick による文字列の追加
+
+## TodoList
 ```sh
-fileServer := http.FileServer(http.Dir("/static"))
-stripPrefix := http.StripPrefix("/static/", fileServer)
-http.Handle("/", stripPrefix)
+go run ch06/TodoList/main.go
+```
+http://localhost:8080/todo
+
+- http.StripPrefix(): http.FileServer() に渡すパスを調整している。static という文字列を除いている
+- template.ParseFIle() ... template ディレクトリに用意した html ファイルを読み込み、テンプレートとして解析する
+
+## TodoList を追加
+```sh
+go run ch06/TodoListAdd/main.go
+```
+http://localhost:8080/todo
+http://localhost:8080/add
+
+- /add パスにアクセスすると、handleAdd()を実行する
+```sh
+http.HandleFunc("/add", handleAdd)
 ```
 
+- post メソッドで URI add にアクセスする
+```html
+<form method="post" action="add">
+```
+
+- ただし add ボタンを押すとパスが 〜/add になってしまい、このままリロードすると最後の入力が延々とTODOリストに追加されてしまう。
+
+## TodoList に Post-Redirect-Get を追加
+- add ボタンを押すとパスが 〜/add になってしまい、このままリロードすると最後の入力が延々とTODOリストに追加されてしまう問題点を、Post-Redirect-Get により解消する
+- 〜/add の実行後、〜/todo にリダイレクトさせることで、リロードしても 〜/add が実行されることを防ぐ
+
+```sh
+go run ch06/TodoListAdd/main.go
+```
