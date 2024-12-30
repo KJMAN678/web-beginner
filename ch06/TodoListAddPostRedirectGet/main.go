@@ -9,7 +9,7 @@ import (
 var todoList []string
 
 func handleTodo(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("ch06/TodoListAdd/templates/todo.html")
+	t, err := template.ParseFiles("ch06/TodoListAddPostRedirectGet/templates/todo.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -21,11 +21,12 @@ func handleAdd(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	todo := r.Form.Get("todo")
 	todoList = append(todoList, todo)
-	handleTodo(w, r)
+	// handleTodo(w, r)
+	http.Redirect(w, r, "/todo", 303)
 }
 
 func main() {
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("ch06/TodoListAdd/static"))))
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("ch06/TodoListAddPostRedirectGet/static"))))
 	http.HandleFunc("/todo", handleTodo)
 	http.HandleFunc("/add", handleAdd)
 

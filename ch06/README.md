@@ -107,5 +107,17 @@ http.HandleFunc("/add", handleAdd)
 - 〜/add の実行後、〜/todo にリダイレクトさせることで、リロードしても 〜/add が実行されることを防ぐ
 
 ```sh
-go run ch06/TodoListAdd/main.go
+go run ch06/TodoListAddPostRedirectGet/main.go
+```
+http://localhost:8080/todo
+
+- handleAdd()関数の最後の処理を、handleTodo関数の実行ではなく、todoパスへのRedirectに変える
+```sh
+func handleAdd(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	todo := r.Form.Get("todo")
+	todoList = append(todoList, todo)
+	// handleTodo(w, r)
+	http.Redirect(w, r, "/todo", 303)
+}
 ```
