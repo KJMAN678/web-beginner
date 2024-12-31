@@ -127,3 +127,10 @@ var todoLists = make(map[string][]string)
 // map[string] ... key が string
 // []string ... value が string の配列
 ```
+
+## セッション ハイジャックをやってみる
+
+- DevTool で取得したセッションIDを更新した下記コマンドを実行すると、表示しているHTMLファイルと中身が同じHTMLファイルが作成される
+```sh
+curl -H 'Cookie: sessionId=<セッションID>' -o ch06/TodoListSession/templates/todo_session_hijack.html http://localhost:8080/todo
+```
