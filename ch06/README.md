@@ -1,15 +1,3 @@
-## 全般
-
-### 初期ファイル作成
-```sh
-go mod init web-begginer
-```
-
-### フォーマッター
-```sh
-go fmt ./...
-```
-
 ## ListenAndServe
 ```sh
 # Linux コマンドでローカルサーバー立ち上げ
@@ -120,4 +108,22 @@ func handleAdd(w http.ResponseWriter, r *http.Request) {
 	// handleTodo(w, r)
 	http.Redirect(w, r, "/todo", 303)
 }
+```
+
+## セッション管理
+
+go mod init ch06/TodoListSession
+
+```sh
+go run ./ch06/TodoListSession/
+```
+http://localhost:8080/todo
+
+```go
+var todoLists = make(map[string][]string)
+
+// make ... map等の初期化
+// map ... key と value を持つデータ構造
+// map[string] ... key が string
+// []string ... value が string の配列
 ```
