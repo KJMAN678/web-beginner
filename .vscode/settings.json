@@ -1,4 +1,9 @@
-"[go]": {
-    // "editor.formatOnSave": true,
-    // "source.organizeImports": false
+{
+    "[go]": {
+        "editor.hover.enabled": false,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "never"
+        },
+    }
 }

@@ -134,3 +134,32 @@ var todoLists = make(map[string][]string)
 ```sh
 curl -H 'Cookie: sessionId=<セッションID>' -o ch06/TodoListSession/templates/todo_session_hijack.html http://localhost:8080/todo
 ```
+
+## セッションの固定化を防ぐ
+
+- セッションID発行時、すでに発行済みのIDと重複していないことを確認する処理
+- 自身が発行したセッションID以外を受け付けないようにする処理
+- セッションの固定化対策
+- 期限切れセッションの破棄
+
+## ユーザー認証
+
+- Go の構造体
+```go
+type 構造体名 struct {
+	フィールド名 型
+	フィールド名 型
+	...
+}
+```
+
+- 構造体のインスタンス生成
+```go
+& 構造体名 {
+	フィールド名: 値,
+	フィールド名: 値,
+	...
+}
+```
+
+
