@@ -22,12 +22,12 @@ func main() {
 
 	// テンプレートを読み込む
 	templates = template.Must(template.ParseGlob("ch06/UserAuthentication/templates/*.html"))
-	fmt.Printf(templates.DefinedTemplates())
-	fmt.Print()
 
 	http.Handle("static/", http.StripPrefix("/static/", http.FileServer(http.Dir("ch06/UserAuthentication/static"))))
 
 	http.HandleFunc("/create-user-account", handleCreateUserAccount)
+
+	http.HandleFunc("/new-user-account", handleNewUserAccount)
 
 	http.HandleFunc("/login", handleLogin)
 
@@ -50,7 +50,7 @@ func main() {
 	}
 }
 
-// ログイン画面減りダイレクトする
+// ログイン画面へリダイレクトする
 func handleRoot(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }

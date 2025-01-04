@@ -57,7 +57,7 @@ func createNewUserAccount(w http.ResponseWriter, r *http.Request, session *HttpS
 	if err != nil {
 		// ユーザーアカウント作成失敗
 		pageData := CreateUserAccountPageData{}
-		log.Print("create user failed: userId=%s cause=%v\n", userId, err)
+		log.Printf("create user failed: userId=%s cause=%v\n", userId, err)
 		if err == ErrUserAlreadyExists {
 			pageData.ErrorMessage = "すでに使われているユーザーIDです。他のIDを試してください。"
 		} else if err == ErrInvalidUserIdFormat {
@@ -77,4 +77,5 @@ func createNewUserAccount(w http.ResponseWriter, r *http.Request, session *HttpS
 		Expires:  user.ExpiresText(),
 	}
 	http.Redirect(w, r, "/new-user-account", http.StatusSeeOther)
+	return
 }
