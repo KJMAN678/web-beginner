@@ -11,9 +11,9 @@ const CookieNameSessionId = "sessionId"
 type HttpSession struct {
 	// セッションID
 	SessionId string
-	// セッションの有効機縁
+	// セッションの有効期限(時刻)
 	Expires time.Time
-	// Post-Redirect-Get での遷移先画面で表示するデータ
+	// Post-Redirect-Get での遷移先に表示するデータ
 	PageData any
 	// セッションを利用中のユーザーアカウント
 	UserAccount *UserAccount
@@ -27,4 +27,20 @@ func NewHttpSession(sessionId string, validityTime time.Duration) *HttpSession {
 		PageData:  "",
 	}
 	return session
+}
+
+// ページデータを削除する
+func (s *HttpSession) ClearPageData() {
+	s.PageData = ""
+}
+
+// セッションIDをCookieへ書き込む
+func (s HttpSession) SetCookie(w http.ResponseWriter) {
+	cookie := &http.Cookie{
+		Name:     CookieNameSessionId,
+		Value:    s.SessionId,
+		Expires:  s.Expires,
+		HttpOnly: true,
+	}
+	http.SetCookie(w, cookie)
 }
