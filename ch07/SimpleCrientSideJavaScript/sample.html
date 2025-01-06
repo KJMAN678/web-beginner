@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- oninput: 値が入力されると calc() 関数を呼び出す -->
+     <!-- span 要素に計算結果を表示する -->
+    <input id="arg1" type="text" oninput="calc ();"
+    > + <input id="arg2" type="text" oninput="calc();"
+    > = <span id="result"></span><br>
+    <script>
+        function calc() {
+            // parseInt は文字列を整数に変換する関数
+            const arg1Value = parseInt(document.getElementById("arg1").value);
+            const arg2Value = parseInt(document.getElementById("arg2").value);
+            let result = "";
+            if (!isNaN(arg1Value) && !isNaN(arg2Value)) {
+                result = arg1Value + arg2Value;
+            }
+            document.getElementById("result").innerHTML = result;
+
+            console.log(`calc called: ${arg1Value} + ${arg2Value} = ${result}`)
+        }
+    </script>
+</body>
+</html>
