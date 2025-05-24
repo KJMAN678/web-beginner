@@ -8,13 +8,13 @@ import (
 )
 
 // セッションIDをキーとしてToDoリストを保持するマップ
-var todoLists = make(map[string][]string) // <1>
+var todoLists = make(map[string][]string)
 
 // セッションIDに紐付くToDoリストを取得する。
-func getTodoList(sessionId string) []string { // <2>
+func getTodoList(sessionId string) []string {
 	todos, ok := todoLists[sessionId]
 	if !ok {
-		todos = []string{} // <3>
+		todos = []string{}
 		todoLists[sessionId] = todos
 	}
 	return todos
@@ -22,13 +22,13 @@ func getTodoList(sessionId string) []string { // <2>
 
 // ToDoリストを返す。
 func handleTodo(w http.ResponseWriter, r *http.Request) {
-	sessionId, err := ensureSession(w, r) // <4>
+	sessionId, err := ensureSession(w, r)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
 
-	todos := getTodoList(sessionId) // <5>
+	todos := getTodoList(sessionId)
 
 	t, _ := template.ParseFiles("ch07/EditUIByJavascript/templates/todo.html")
 	t.Execute(w, todos)

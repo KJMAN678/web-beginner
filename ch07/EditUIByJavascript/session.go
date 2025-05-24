@@ -1,11 +1,43 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 )
 
 const CookieNameSessionId = "sessionId"
+
+// ユーザアカウント情報を保持する構造体。
+type UserAccount struct {
+	// ユーザID
+	Id string
+	// ハッシュ化されたパスワード
+	HashedPassword string
+	// アカウントの有効期限
+	Expires time.Time
+	// ToDoリスト
+	ToDoList []string
+}
+
+const cookieSessionId = "sessionId"
+const sessionIdSecret = 123456789
+
+func ensureSession(w http.ResponseWriter, r *http.Request) (sessionId string, err error) { // <1>
+	c, err := r.Cookie(cookieSessionId)
+	if err == http.ErrNoCookie { // <2>
+		sessionId, err = startSession(w)
+		return
+	}
+	if err == nil { // <3>
+		sessionId = c.Value
+		if ok, _ := verifySessionId(sessionIdSecret, sessionId); !ok {
+			return "", fmt.Errorf("invalid session id")
+		}
+		return
+	}
+	return
+}
 
 // セッション情報を保持する構造体。
 type HttpSession struct {
@@ -57,4 +89,25 @@ func (s HttpSession) SetCookie(w http.ResponseWriter) {
 		Secure:   s.useSecureCookie,
 	}
 	http.SetCookie(w, cookie)
+}
+
+func startSession(w http.ResponseWriter) (string, error) {
+	sessionId := generateSessionId(sessionIdSecret)
+	cookie := &http.Cookie{
+		Name:     cookieSessionId,
+		Value:    sessionId,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
+	}
+	http.SetCookie(w, cookie)
+	return sessionId, nil
+}
+
+func generateSessionId(secret int) string {
+	return fmt.Sprintf("%d", time.Now().UnixNano())
+}
+
+func verifySessionId(secret int, sessionId string) (bool, error) {
+	// 簡易的な実装
+	return true, nil
 }

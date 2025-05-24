@@ -8,6 +8,11 @@
 go mod init web-beginner
 ```
 
+### 更新
+```sh
+$ go mod tidy
+```
+
 ### フォーマッター
 ```sh
 go fmt ./...

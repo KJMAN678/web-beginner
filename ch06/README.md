@@ -42,7 +42,7 @@ if err != nil {
 ## FileServer static/xxx.html を読み込んでローカルサーバー立ち上げ
 
 ```sh
-go run ch06/FileServer/main.go
+$ go run ch06/FileServer/main.go
 ```
 # ローカルサーバーのURL
 http://localhost:8080/hello.html
@@ -55,7 +55,7 @@ http.FileServer(http.Dir("hoge-dir")))
 
 ### CSSとJavaScriptも読み込みたい
 ```sh
-go run ch06/FileServerCSSJavaScript/main.go
+$ go run ch06/FileServerCSSJavaScript/main.go
 ```
 
 - static フォルダ以下に css と JavaScript も追加。
@@ -64,7 +64,7 @@ go run ch06/FileServerCSSJavaScript/main.go
 
 ## TodoList
 ```sh
-go run ch06/TodoList/main.go
+$ go run ch06/TodoList/main.go
 ```
 http://localhost:8080/todo
 
@@ -73,7 +73,7 @@ http://localhost:8080/todo
 
 ## TodoList を追加
 ```sh
-go run ch06/TodoListAdd/main.go
+$ go run ch06/TodoListAdd/main.go
 ```
 http://localhost:8080/todo
 http://localhost:8080/add
@@ -95,7 +95,7 @@ http.HandleFunc("/add", handleAdd)
 - 〜/add の実行後、〜/todo にリダイレクトさせることで、リロードしても 〜/add が実行されることを防ぐ
 
 ```sh
-go run ch06/TodoListAddPostRedirectGet/main.go
+$ go run ch06/TodoListAddPostRedirectGet/main.go
 ```
 http://localhost:8080/todo
 
@@ -112,10 +112,8 @@ func handleAdd(w http.ResponseWriter, r *http.Request) {
 
 ## セッション管理
 
-go mod init ch06/TodoListSession
-
 ```sh
-go run ./ch06/TodoListSession/
+$ go run ./ch06/TodoListSession/
 ```
 http://localhost:8080/todo
 
@@ -132,7 +130,7 @@ var todoLists = make(map[string][]string)
 
 - DevTool で取得したセッションIDを更新した下記コマンドを実行すると、表示しているHTMLファイルと中身が同じHTMLファイルが作成される
 ```sh
-curl -H 'Cookie: sessionId=<セッションID>' -o ch06/TodoListSession/templates/todo_session_hijack.html http://localhost:8080/todo
+$ curl -H 'Cookie: sessionId=<セッションID>' -o ch06/TodoListSession/templates/todo_session_hijack.html http://localhost:8080/todo
 ```
 
 ## セッションの固定化を防ぐ
@@ -165,7 +163,7 @@ type 構造体名 struct {
 ## ユーザー認証
 
 ```sh
-go run ./ch06/UserAuthentication/
+$ go run ./ch06/UserAuthentication/
 ```
 http://localhost:8080/todo
 
